@@ -1,0 +1,49 @@
+:root {
+    --bs-primary: #2f6b4f;
+    --bs-primary-rgb: 47, 107, 79;
+    --bs-success: #4a8a3a;
+    --bs-success-rgb: 74, 138, 58;
+    --bs-secondary: #6b6157;
+    --bs-secondary-rgb: 107, 97, 87;
+}
+
+body {
+    background-color: #f4f1eb;
+}
+
+.navbar {
+    background-color: #24402f !important;
+}
+
+.navbar-brand {
+    font-weight: 600;
+}
+
+.card {
+    border: none;
+    border-radius: 10px;
+}
+
+.card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.2s ease-in-out;
+}
+
+.table thead th {
+    background-color: #24402f !important;
+    font-weight: 500;
+}
+
+.btn {
+    border-radius: 6px;
+}
+
+.btn-primary {
+    background-color: #2f6b4f;
+    border-color: #2f6b4f;
+}
+
+.btn-primary:hover {
+    background-color: #24402f;
+    border-color: #24402f;
+}

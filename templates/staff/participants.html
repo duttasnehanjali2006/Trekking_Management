@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Participants{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Participants: {{ trek.name }}</h2>
+
+<table class="table table-bordered table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Contact</th>
+            <th>Booking Date</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for booking in bookings %}
+        <tr>
+            <td>{{ booking.user.name }}</td>
+            <td>{{ booking.user.email }}</td>
+            <td>{{ booking.user.contact_details or '-' }}</td>
+            <td>{{ booking.booking_date.strftime('%d-%m-%Y') }}</td>
+            <td>
+                {% if booking.status == 'Booked' %}
+                    <span class="badge bg-success">Booked</span>
+                {% elif booking.status == 'Cancelled' %}
+                    <span class="badge bg-danger">Cancelled</span>
+                {% else %}
+                    <span class="badge bg-secondary">{{ booking.status }}</span>
+                {% endif %}
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="5" class="text-center text-muted">No participants yet.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="{{ url_for('staff.dashboard') }}" class="btn btn-secondary">Back to Dashboard</a>
+{% endblock %}

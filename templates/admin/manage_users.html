@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block title %}Manage Users{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Manage Users (Trekkers)</h2>
+
+<form method="GET" class="row g-2 mb-3">
+    <div class="col-md-4">
+        <input type="text" class="form-control" name="q" placeholder="Search by name or ID" value="{{ search_query }}">
+    </div>
+    <div class="col-md-2">
+        <button type="submit" class="btn btn-outline-primary w-100">Search</button>
+    </div>
+    {% if search_query %}
+    <div class="col-md-2">
+        <a href="{{ url_for('admin.manage_users') }}" class="btn btn-outline-secondary w-100">Clear</a>
+    </div>
+    {% endif %}
+</form>
+
+<table class="table table-bordered table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Contact</th>
+            <th>Blacklisted</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in users %}
+        <tr>
+            <td>{{ user.id }}</td>
+            <td>{{ user.name }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.contact_details or '-' }}</td>
+            <td>
+                {% if user.is_blacklisted %}
+                    <span class="badge bg-danger">Blacklisted</span>
+                {% else %}
+                    <span class="badge bg-secondary">No</span>
+                {% endif %}
+            </td>
+            <td>
+                <form action="{{ url_for('admin.toggle_blacklist', user_id=user.id) }}" method="POST">
+                    <button type="submit" class="btn btn-sm btn-outline-danger">
+                        {{ 'Un-blacklist' if user.is_blacklisted else 'Blacklist' }}
+                    </button>
+                </form>
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="6" class="text-center text-muted">No users registered yet.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

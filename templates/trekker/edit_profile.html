@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Edit Profile{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Edit Profile</h2>
+
+<form method="POST" class="col-md-6">
+    <div class="mb-3">
+        <label class="form-label">Full Name</label>
+        <input type="text" class="form-control" name="name" value="{{ current_user.name }}" required>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Email</label>
+        <input type="email" class="form-control" value="{{ current_user.email }}" disabled>
+        <div class="form-text">Email cannot be changed.</div>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Contact Number</label>
+        <input type="text" class="form-control" name="contact_details" value="{{ current_user.contact_details or '' }}">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+    <a href="{{ url_for('trekker.dashboard') }}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}
+EOF

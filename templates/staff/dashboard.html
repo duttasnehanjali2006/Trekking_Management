@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Staff Dashboard{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">My Assigned Treks</h2>
+
+<table class="table table-bordered table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>Trek Name</th>
+            <th>Location</th>
+            <th>Dates</th>
+            <th>Slots</th>
+            <th>Status</th>
+            <th>Participants</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in trek_data %}
+        <tr>
+            <td>{{ item.trek.name }}</td>
+            <td>{{ item.trek.location }}</td>
+            <td>{{ item.trek.start_date }} to {{ item.trek.end_date }}</td>
+            <td>{{ item.trek.available_slots }} / {{ item.trek.total_slots }}</td>
+            <td><span class="badge bg-secondary">{{ item.trek.status }}</span></td>
+            <td>{{ item.participant_count }}</td>
+            <td>
+                <a href="{{ url_for('staff.update_trek', trek_id=item.trek.id) }}" class="btn btn-sm btn-outline-primary">Update</a>
+                <a href="{{ url_for('staff.view_participants', trek_id=item.trek.id) }}" class="btn btn-sm btn-outline-secondary">View Participants</a>
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="7" class="text-center text-muted">No treks assigned to you yet.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}My Dashboard{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>My Bookings</h2>
+    <div>
+        <a href="{{ url_for('trekker.browse_treks') }}" class="btn btn-primary">Browse Treks</a>
+        <a href="{{ url_for('trekker.edit_profile') }}" class="btn btn-outline-secondary">Edit Profile</a>
+    </div>
+</div>
+
+<table class="table table-bordered table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>Trek</th>
+            <th>Location</th>
+            <th>Booking Date</th>
+            <th>Trek Status</th>
+            <th>Booking Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for booking in bookings %}
+        <tr>
+            <td>{{ booking.trek.name }}</td>
+            <td>{{ booking.trek.location }}</td>
+            <td>{{ booking.booking_date.strftime('%d-%m-%Y') }}</td>
+            <td><span class="badge bg-secondary">{{ booking.trek.status }}</span></td>
+            <td>
+                {% if booking.status == 'Booked' %}
+                    <span class="badge bg-success">Booked</span>
+                {% elif booking.status == 'Cancelled' %}
+                    <span class="badge bg-danger">Cancelled</span>
+                {% else %}
+                    <span class="badge bg-secondary">{{ booking.status }}</span>
+                {% endif %}
+            </td>
+            <td>
+                {% if booking.status == 'Booked' %}
+                <form action="{{ url_for('trekker.cancel_booking', booking_id=booking.id) }}" method="POST">
+                    <button type="submit" class="btn btn-sm btn-outline-danger">Cancel</button>
+                </form>
+                {% endif %}
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="6" class="text-center text-muted">You haven't booked any treks yet.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
